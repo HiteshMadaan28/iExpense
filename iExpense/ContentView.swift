@@ -5,6 +5,7 @@
 //  Created by Hitesh Madaan on 23/05/24.
 //
 
+import Observation
 import SwiftUI
 
 @Observable
