@@ -9,8 +9,19 @@ import Observation
 import SwiftUI
 
 struct SecondView:View{
+    
+    @Environment(\.dismiss) var dismiss
+    var text:String
+    
+    init(_ text: String) {
+        self.text = text
+    }
     var body: some View{
-        Text("Second view")
+        
+        Text("\(text)")
+        Button("Dismiss"){
+            dismiss()
+        }
     }
 }
 
@@ -34,7 +45,7 @@ struct ContentView: View {
             {
                 showingsheet.toggle()
             }.sheet(isPresented: $showingsheet){
-                SecondView()
+                SecondView("Hitesh is a good boy")
             }
         }
         .padding(20)
