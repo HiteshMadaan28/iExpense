@@ -31,25 +31,45 @@ class User{
     var lastName="Madaan"
 }
 struct ContentView: View {
+    @State private var numbers=[Int]()
+    @State private var currentNumber=1
     @State private var user=User()
     @State private var showingsheet=false
     
     var body: some View {
-        VStack{
-            Text("The name is \(user.firstName) \(user.lastName) .")
-            
-            TextField("First Name", text:  $user.firstName)
-            TextField("Last Name", text: $user.lastName)
-            
-            Button("Show Sheets")
-            {
-                showingsheet.toggle()
-            }.sheet(isPresented: $showingsheet){
-                SecondView("Hitesh is a good boy")
+        NavigationStack{
+            VStack{
+                List{
+                    ForEach(numbers,id: \.self){n in
+                        Text("Row \(n)")
+                    }.onDelete(perform:removeRow)
+                }
+//                Text("The name is \(user.firstName) \(user.lastName) .")
+//                
+//                TextField("First Name", text:  $user.firstName)
+//                TextField("Last Name", text: $user.lastName)
+                
+                Button("Show Sheets")
+                {
+                    numbers.append(currentNumber)
+                    currentNumber += 1
+    //                showingsheet.toggle()
+                }.sheet(isPresented: $showingsheet){
+                    SecondView("Hitesh is a good boy")
+                }
             }
+            .padding(20)
+            .toolbar{
+                EditButton()
+            }
+            
         }
-        .padding(20)
         
+        
+    }
+    
+    func removeRow(ofset: IndexSet){
+        numbers.remove(atOffsets: ofset)
     }
 
 }
