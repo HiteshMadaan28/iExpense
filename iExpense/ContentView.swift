@@ -32,7 +32,8 @@ class User{
 }
 struct ContentView: View {
     @State private var numbers=[Int]()
-    @State private var currentNumber=1
+    // We can also use @AppStorage["num"] private var currentNumber = 0
+    @State private var currentNumber=UserDefaults.standard.integer(forKey: "num")
     @State private var user=User()
     @State private var showingsheet=false
     
@@ -49,10 +50,13 @@ struct ContentView: View {
 //                TextField("First Name", text:  $user.firstName)
 //                TextField("Last Name", text: $user.lastName)
                 
-                Button("Show Sheets")
+                Button("Show Sheets \(currentNumber)")
                 {
                     numbers.append(currentNumber)
                     currentNumber += 1
+                    
+                    UserDefaults.standard.set(currentNumber,forKey: "num")
+                    
     //                showingsheet.toggle()
                 }.sheet(isPresented: $showingsheet){
                     SecondView("Hitesh is a good boy")
